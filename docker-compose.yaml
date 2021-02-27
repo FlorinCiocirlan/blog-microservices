@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+    client:
+        build:
+            context: ./client
+        container_name: react-app
+        stdin_open: true
+        volumes:
+            - ./client:/usr/src/app/my-app
+            - /usr/src/app/my-app/node_modules
+        ports:
+            - 3000:3000
+    posts:
+        build:
+            context: ./posts
+        container_name: posts-service
+        volumes:
+            - ./posts:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - 4000:4000
+    comments:
+        build:
+            context: ./comments
+        container_name: comments-service
+        volumes:
+            - ./comments:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - 4001:4001
+    moderation:
+        build:
+            context: ./moderation
+        container_name: moderation-service
+        volumes:
+            - ./moderation:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - 4003:4003
+    event-bus:
+        build:
+            context: ./event-bus
+        container_name: event-bus-service
+        volumes:
+            - ./event-bus:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - 4005:4005
+
+    query:
+        build:
+            context: ./posts
+        container_name: query-service
+        volumes:
+            - ./query:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - 4002:4002
